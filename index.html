@@ -6,16 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Momentum</title>
+    <link rel="stylesheet" href="./styles.css">
     <script defer type="module" src="./app.js"></script>
 </head>
 
 <body>
     <div class="app">
         <section class="center">
-            <div class="center-form-container">
+            <div class="form center-nameForm-container show">
                 <p class="center-askName">Hello, what's your name?</p>
                 <form class="center-form">
                     <input class="center-input" type="text">
+                </form>
+            </div>
+            <div class="form center-todoForm-container hide">
+                <p class="center-helloName">Good evening</p>
+                <p class="userName"></p>
+                <form class="center-todo-form">
+                    <p class="center-askTodo">What is your main focus today?</p>
+                    <input class="center-todo-input" type="text">
                 </form>
             </div>
         </section>
