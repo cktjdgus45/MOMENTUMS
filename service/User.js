@@ -24,7 +24,7 @@ export default class User {
         localStorage.setItem('todos', JSON.stringify(this.todos));
     }
     getTodo() {
-        const todos = localStorage.getItem('todos');
-        console.log(todos);
+        const todos = JSON.parse(localStorage.getItem('todos'));
+        return todos;
     }
 }

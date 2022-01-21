@@ -1,3 +1,4 @@
+import DomConstructor from './service/createDOM.js';
 import User from './service/User.js';
 
 const nameInput = document.querySelector('.center-name-input');
@@ -7,8 +8,23 @@ const todoForm = document.querySelector('.center-todo-form');
 const nameFormContainer = document.querySelector('.center-nameForm-container');
 const todoFormContainer = document.querySelector('.center-todoForm-container');
 const userNameElement = document.querySelector('.userName');
+const ulElement = document.querySelector('.todos');
 
 const user = new User();
+const domConstructor = new DomConstructor();
+
+const renderTodo = (todos) => {
+    if (typeof (todos) === 'string') {
+        const todo = domConstructor.createToDoElement(todos);
+        ulElement.appendChild(todo);
+        return;
+    }
+    todos.map(item => {
+        const { todo } = item;
+        const todoElemnt = domConstructor.createToDoElement(todo);
+        ulElement.appendChild(todoElemnt);
+    })
+}
 
 const handleFormDisplay = () => {
     todoFormContainer.classList.replace('hide', 'show');
@@ -18,6 +34,7 @@ const handleFormDisplay = () => {
 if (user.isLogin()) {
     handleFormDisplay();
     userNameElement.innerText = user.getName();
+    renderTodo(user.getTodo());
 }
 
 const handleNameSubmit = (event) => {
@@ -34,8 +51,10 @@ const handleTodoSubmit = (event) => {
     const todo = todoInput.value;
     todoInput.value = "";
     user.setTodo(todo);
-    user.getTodo();
+    renderTodo(todo);
 }
+
+
 
 nameForm.addEventListener('submit', handleNameSubmit);
 todoForm.addEventListener('submit', handleTodoSubmit);
