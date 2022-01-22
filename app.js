@@ -1,3 +1,4 @@
+import Clock from './service/clock.js';
 import DomConstructor from './service/createDOM.js';
 import User from './service/User.js';
 
@@ -12,6 +13,8 @@ const ulElement = document.querySelector('.todos');
 
 const user = new User();
 const domConstructor = new DomConstructor();
+const clock = new Clock();
+
 
 const renderTodo = (todos) => {
     if (typeof (todos) === 'string') {
@@ -35,6 +38,7 @@ if (user.isLogin()) {
     handleFormDisplay();
     userNameElement.innerText = user.getName();
     renderTodo(user.getTodo());
+    clock.display();
 }
 
 const handleNameSubmit = (event) => {
