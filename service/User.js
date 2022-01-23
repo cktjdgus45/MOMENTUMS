@@ -22,8 +22,17 @@ export default class User {
         };
         this.todos.push(todo);
         localStorage.setItem('todos', JSON.stringify(this.todos));
+
     }
-    getTodo() {
+
+    setTodos(todos) {
+        localStorage.setItem('todos', JSON.stringify(todos));
+        return new Promise((resolve, reject) => {
+            resolve('localstorage store Success!');
+        });
+    }
+
+    getTodos() {
         const todos = JSON.parse(localStorage.getItem('todos'));
         return todos;
     }

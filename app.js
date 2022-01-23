@@ -1,5 +1,5 @@
 import Clock from './service/clock.js';
-import DomConstructor from './service/createDOM.js';
+import DomConstructor from './service/handleDom.js';
 import User from './service/User.js';
 
 const nameInput = document.querySelector('.center-name-input');
@@ -16,17 +16,28 @@ const domConstructor = new DomConstructor();
 const clock = new Clock();
 
 
-const renderTodo = (todos) => {
-    if (typeof (todos) === 'string') {
-        const todo = domConstructor.createToDoElement(todos);
-        ulElement.appendChild(todo);
-        return;
-    }
+const handelDelete = async (buttonElement) => {
+    buttonElement.addEventListener('click', (event) => {
+        const updated = user.getTodos().filter(item => {
+            return item['id'] !== parseInt(event.target.parentNode.dataset.id);
+        })
+        user.setTodos(updated).then(() => renderTodos(user.getTodos()));
+    })
+}
+
+const renderTodos = (todos) => {
     todos.map(item => {
-        const { todo } = item;
-        const todoElemnt = domConstructor.createToDoElement(todo);
+        const { todo, id } = item;
+        const todoElemnt = domConstructor.createToDoElement(todo, id);
+        handelDelete(todoElemnt.lastElementChild)
         ulElement.appendChild(todoElemnt);
     })
+}
+
+const renderTodo = (todos) => {
+    const todo = domConstructor.createToDoElement(todos);
+    ulElement.appendChild(todo);
+    return;
 }
 
 const handleFormDisplay = () => {
@@ -37,7 +48,7 @@ const handleFormDisplay = () => {
 if (user.isLogin()) {
     handleFormDisplay();
     userNameElement.innerText = user.getName();
-    renderTodo(user.getTodo());
+    renderTodos(user.getTodos());
     clock.display();
 }
 
