@@ -3,14 +3,7 @@ export default class Clock {
     minutes = new Date().getMinutes();
     seconds = new Date().getSeconds();
 
-    setHours() {
-        setInterval(() => {
-            this.hours++;
-        }, 1000);
-    }
-    setMinutes() {
-    }
-    setSeconds() {
+    setTimes() {
         setInterval(() => {
             this.seconds++;
             if (this.seconds === 60) {
@@ -28,14 +21,14 @@ export default class Clock {
     }
 
     display() {
-        this.setSeconds();
+        this.setTimes();
         const hours = document.querySelector('.hours');
         const minutes = document.querySelector('.minutes');
         const seconds = document.querySelector('.seconds');
         setInterval(() => {
-            hours.innerHTML = this.hours;
-            minutes.innerHTML = this.minutes;
-            seconds.innerHTML = this.seconds;
+            hours.innerHTML = `${this.hours < 10 ? `0${this.hours}` : this.hours}`;
+            minutes.innerHTML = `${this.minutes < 10 ? `0${this.minutes}` : this.minutes}`;
+            seconds.innerHTML = `${this.seconds < 10 ? `0${this.seconds}` : this.seconds}`;
         }, 1000)
     }
 }
