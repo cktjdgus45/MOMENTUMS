@@ -14,27 +14,48 @@ const ulElement = document.querySelector('.todos');
 const user = new User();
 const domConstructor = new DomConstructor();
 const clock = new Clock();
+let init = true;
 
+const updateScreen = (li) => {
+    const updatedUI = document.createElement('ul');
+    updatedUI.className = 'new-todos';
+    updatedUI.appendChild(li);
+    todoFormContainer.appendChild(updatedUI);
+}
 
 const handelDelete = async (buttonElement) => {
     buttonElement.addEventListener('click', (event) => {
+        init = false;
         const updated = user.getTodos().filter(item => {
             return item['id'] !== parseInt(event.target.parentNode.dataset.id);
         })
-        user.setTodos(updated).then(() => renderTodos(user.getTodos()));
+        user.setTodos(updated).then(() => {
+            new User();
+            renderTodos(user.getTodos())
+        });
+        ulElement.removeChild(buttonElement.parentNode);
     })
 }
 
 const renderTodos = (todos) => {
+    if (!todos) {
+        return;
+    }
     todos.map(item => {
         const { todo, id } = item;
         const todoElemnt = domConstructor.createToDoElement(todo, id);
-        handelDelete(todoElemnt.lastElementChild)
-        ulElement.appendChild(todoElemnt);
+        if (init) {
+            ulElement.appendChild(todoElemnt);
+        }
+        handelDelete(todoElemnt.lastElementChild);
     })
 }
 
 const renderTodo = (todos) => {
+    init = true;
+    if (!todos) {
+        return;
+    }
     const todo = domConstructor.createToDoElement(todos);
     ulElement.appendChild(todo);
     return;
@@ -65,7 +86,7 @@ const handleTodoSubmit = (event) => {
     event.preventDefault();
     const todo = todoInput.value;
     todoInput.value = "";
-    user.setTodo(todo);
+    new User().setTodo(todo);
     renderTodo(todo);
 }
 

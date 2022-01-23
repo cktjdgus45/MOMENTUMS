@@ -1,6 +1,10 @@
 export default class User {
-    todos = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : [];
+    todos;
     userName;
+    constructor() {
+        this.todos = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : [];
+        // console.log(this.todos)
+    }
     setName(userName) {
         localStorage.setItem('name', userName);
     }
@@ -20,6 +24,7 @@ export default class User {
             id: this.todos.length,
             todo: todoValue
         };
+        console.log(this.todos);
         this.todos.push(todo);
         localStorage.setItem('todos', JSON.stringify(this.todos));
 
