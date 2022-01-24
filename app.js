@@ -1,6 +1,7 @@
 import Clock from './service/clock.js';
 import DomConstructor from './service/handleDom.js';
 import User from './service/User.js';
+import Weather from './service/weather.js';
 
 const nameInput = document.querySelector('.center-name-input');
 const todoInput = document.querySelector('.center-todo-input');
@@ -71,6 +72,8 @@ if (user.isLogin()) {
     userNameElement.innerText = user.getName();
     renderTodos(user.getTodos());
     clock.display();
+    const weather = new Weather();
+    weather.renderWeather();
 }
 
 const handleNameSubmit = (event) => {
