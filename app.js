@@ -1,5 +1,6 @@
 import Clock from './service/clock.js';
 import DomConstructor from './service/handleDom.js';
+import Queote from './service/queote.js';
 import User from './service/User.js';
 import Weather from './service/weather.js';
 
@@ -74,6 +75,7 @@ if (user.isLogin()) {
     clock.display();
     const weather = new Weather();
     weather.renderWeather();
+    new Queote().getRandomQueote();
 }
 
 const handleNameSubmit = (event) => {
